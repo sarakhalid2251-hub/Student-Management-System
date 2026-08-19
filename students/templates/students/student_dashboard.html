@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f6f8;
+            color: #333;
+        }
+
+        .header {
+            background-color: #1f4e79;
+            color: white;
+            padding: 25px 40px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0 0 8px 0;
+        }
+
+        .welcome {
+            font-size: 16px;
+        }
+
+        .logout-btn {
+            background-color: white;
+            color: #1f4e79;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background-color: #e8eef3;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        .card {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #1f4e79;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            background-color: #1f4e79;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .empty {
+            color: #777;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="header-content">
+
+            <div>
+                <h1>Student Dashboard</h1>
+                <div class="welcome">
+                    Welcome, {{ request.user.username }}!
+                </div>
+            </div>
+
+            <form method="POST" action="/logout/">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">
+                    Logout
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="card">
+            <h2>My Marks & Grades</h2>
+
+            {% if marks %}
+                <table>
+                    <tr>
+                        <th>Exam</th>
+                        <th>Course</th>
+                        <th>Marks Obtained</th>
+                        <th>Total Marks</th>
+                        <th>Percentage</th>
+                        <th>Grade</th>
+                    </tr>
+
+                    {% for mark in marks %}
+                    <tr>
+                        <td>{{ mark.exam_name }}</td>
+                        <td>{{ mark.enrollment.course.course_name }}</td>
+                        <td>{{ mark.marks_obtained }}</td>
+                        <td>{{ mark.total_marks }}</td>
+                        <td>{{ mark.calculate_percentage|floatformat:2 }}%</td>
+                        <td>{{ mark.calculate_grade }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+            {% else %}
+                <p class="empty">No marks available yet.</p>
+            {% endif %}
+        </div>
+
+
+        <div class="card">
+            <h2>My Attendance</h2>
+
+            {% if attendance %}
+                <table>
+                    <tr>
+                        <th>Course</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+
+                    {% for record in attendance %}
+                    <tr>
+                        <td>{{ record.enrollment.course.course_name }}</td>
+                        <td>{{ record.date }}</td>
+                        <td>{{ record.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+            {% else %}
+                <p class="empty">
+                    No attendance records available.
+                </p>
+            {% endif %}
+        </div>
+
+    </div>
+
+</body>
+</html>

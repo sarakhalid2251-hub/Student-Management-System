@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Attendance</title>
+</head>
+
+<body>
+
+    <h1>Add Attendance</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Student / Course:</label>
+        <select name="enrollment" required>
+            <option value="">Select Student / Course</option>
+
+            {% for enrollment in enrollments %}
+                <option value="{{ enrollment.id }}">
+                    {{ enrollment.student.name }} - {{ enrollment.course.course_name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <label>Date:</label>
+        <input type="date" name="date" required>
+
+        <br><br>
+
+        <label>Status:</label>
+        <select name="status" required>
+            <option value="">Select Status</option>
+            <option value="Present">Present</option>
+            <option value="Absent">Absent</option>
+        </select>
+
+        <br><br>
+
+        <button type="submit">Save Attendance</button>
+    </form>
+
+    <br>
+
+    <a href="/teacher-dashboard/">Back to Teacher Dashboard</a>
+
+</body>
+</html>

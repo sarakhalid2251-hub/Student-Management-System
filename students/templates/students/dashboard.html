@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f6f9;
+        }
+
+        .navbar {
+            background-color: #343a40;
+            color: white;
+            padding: 18px 30px;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            width: 200px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            margin: 0;
+        }
+
+        .card p {
+            color: #666;
+        }
+
+        .links {
+            margin-top: 30px;
+        }
+
+        .links a {
+            display: inline-block;
+            margin-right: 15px;
+            padding: 10px 15px;
+            background-color: #343a40;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <h2>Student Management System</h2>
+    </div>
+
+    <div class="container">
+
+        <h1>Welcome, {{ request.user.username }}!</h1>
+
+        <div class="cards">
+
+            <div class="card">
+                <h2>{{ student_count }}</h2>
+                <p>Total Students</p>
+            </div>
+
+            <div class="card">
+                <h2>{{ teacher_count }}</h2>
+                <p>Total Teachers</p>
+            </div>
+
+            <div class="card">
+                <h2>{{ course_count }}</h2>
+                <p>Total Courses</p>
+            </div>
+
+            <div class="card">
+                <h2>{{ enrollment_count }}</h2>
+                <p>Total Enrollments</p>
+            </div>
+
+        </div>
+
+        <div class="links">
+            <a href="/admin/">Admin Panel</a>
+            <a href="/admin/students/student/">Students</a>
+            <a href="/admin/students/teacher/">Teachers</a>
+            <a href="/admin/students/course/">Courses</a>
+            <a href="/admin/students/enrollment/">Enrollments</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
